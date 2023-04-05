@@ -11,3 +11,5 @@ WALLET_PRIVATE_KEY=<your key here>
   
 To execute:
 **node index**
+
+Here is the URL of the image I used. In this case, it was a Bored Ape Yacht Club NFT: https://ipfs.io/ipfs/QmciVmDTGKiWUHVfxBskZix6pQVQ4FsuzhCBjdQCdCg7Z8
