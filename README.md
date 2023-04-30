@@ -8,3 +8,7 @@ Steps:
 3. ***npm run start:frontend***
 
 *This project was a 'code with Ania Kubow' project (https://www.youtube.com/watch?v=JJ9fkYX7q4A)
+
+![alt text](chatGPTClone.png)
+
+
