@@ -3,6 +3,7 @@ This is a chatGPT clone built with React, Express, Cors and OpenAI. To run, issu
 
 Steps:
 1. Download Project
+2. ***npm install***
 2. ***npm run start:backend***
 3. ***npm run start:frontend***
 
