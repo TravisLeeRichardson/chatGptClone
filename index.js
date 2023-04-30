@@ -2,7 +2,7 @@ const PORT = 8000;
 const express = require ('express');
 const cors = require ('cors');
 const app = express(); 
-app.use(express.json()); //send from front end to back end with POST cmds. V
+app.use(express.json()); //send from front end to back end with POST cmds.
 app.use(cors());
 
 require("dotenv").config();

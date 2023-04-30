@@ -39,30 +39,27 @@ const App = () => {
       console.error(error);
     }
   }
-
   useEffect(() => {
-    console.log(currentTitle, value, message)
+    console.log(currentTitle, value, message);
     if (!currentTitle && value && message) {
-      setCurrentTitle(value)
+      setCurrentTitle(value);
     }
     if (currentTitle && value && message) {
-      setPreviousChats(previousChats => (
-        [...previousChats,
+      setPreviousChats(previousChats => [
+        ...previousChats,
         {
           title: currentTitle,
           role: "user",
           content: value
         },
-
         {
           title: currentTitle,
           role: message.role,
           content: message.content
         }
-        ]
-      ))
+      ]);
     }
-  }, [message, currentTitle])
+  }, [message, currentTitle, setCurrentTitle, setPreviousChats, value, previousChats]);
   
   const currentChat = previousChats.filter(previousChat => previousChat.title === currentTitle)
   const uniqueTitles = Array.from(new Set(previousChats.map(previousChat => previousChat.title)))
