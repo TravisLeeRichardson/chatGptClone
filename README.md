@@ -1,12 +1,9 @@
-# NftStory
-This demonstrates how you can connect to OpenAI to tell a story about an NFT based on that NFT's traits.
+# chatGptClone
+This is a chatGPT clone built with React, Express, Cors and OpenAI. To run, issue the following:
 
 Steps:
-1. Create your Infura Account.
-2. Create your openai Account.
-3. Choose Ethereum Mainnet.
-4. In a terminal, execute **npm install**
-5. In a terminal, execute **node index**
+1. Download Project
+2. ***npm run start:backend***
+3. ***npm run start:frontend***
 
-Note:
-Here is the URL of the image I used. In this case, it was a Bored Ape Yacht Club NFT: https://ipfs.io/ipfs/QmciVmDTGKiWUHVfxBskZix6pQVQ4FsuzhCBjdQCdCg7Z8
+*This project was a 'code with Ania Kubow' project (https://www.youtube.com/watch?v=JJ9fkYX7q4A)

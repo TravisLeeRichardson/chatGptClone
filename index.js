@@ -1,77 +1,41 @@
-require("dotenv").config();
-const { ethers } = require("ethers");
-const { Configuration, OpenAIApi } = require ("openai");
+const PORT = 8000;
+const express = require ('express');
+const cors = require ('cors');
+const app = express(); 
+app.use(express.json()); //send from front end to back end with POST cmds. V
+app.use(cors());
 
+require("dotenv").config();
+const { Configuration, OpenAIApi } = require ("openai");
 const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
 
-const main = async () => {
-
-   // Import the libraries and load the environment variables.
-    const { SDK, Auth, TEMPLATES, Metadata } = require('@infura/sdk') ;
-    require('dotenv').config()
-
-    // Create Auth object
-    const auth = new Auth({
-        projectId: process.env.INFURA_API_KEY,
-        secretId: process.env.INFURA_API_KEY_SECRET,
-        privateKey: process.env.WALLET_PRIVATE_KEY,
-        chainId: 1,
-    });
-
-// Instantiate SDK
-const sdk = new SDK(auth);
-const collectionId2 = '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D'; //BAYC collection
- image = null;
- traits = null;
-
-    const getNFTs = async (collectionId)=> {
-        const nfts = await sdk.api.getNFTsForCollection({
-            contractAddress: collectionId,
-        });
-        console.log('nfts:', nfts);
+// the below will map to localhost:8000/completions. This is our "route"
+app.post('/completions', async (req, res) => {
+    const options = {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${openai.configuration.apiKey}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            model : "gpt-3.5-turbo",
+            messages: [{ role: "user", content: req.body.message}], //send user input over to openAI
+            max_tokens: 100, 
+        })
     }
-    
-    const getTokenMetadata = async (collectionId) => {
-        const tokenMetadata = await sdk.api.getTokenMetadata({
-            contractAddress: collectionId,
-            tokenId: 5260,
-        });
-        image = JSON.stringify(tokenMetadata.metadata.image);
-        traits = JSON.stringify(tokenMetadata.metadata.attributes);
-
-        console.log (image);
-        console.log(traits);
+    try{
+        const response = await fetch('https://api.openai.com/v1/chat/completions', options); //fetch requires certain version of node.js...
+        const data = await response.json();
+        res.send(data); //send to localhost:8000/completions
     }
-
-    const getOpenAiStory = async (traits) => {
-        const completion = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: 'Create a story about this Bored Ape Yacht Club character based on these traits ${traits}',
-        max_tokens: 200
-    });
-    console.log("++++++++++++++++++++");
-    console.log(completion.data.choices[0].text);
-    console.log("++++++++++++++++++++");
-}
-
-(async() => {
-    try {
-      const nfts = await getNFTs(collectionId2);
-      const metadata = await getTokenMetadata(collectionId2);
-      const AIStory = await getOpenAiStory(traits);
-    } catch (error) {
-      console.log(error);
+    catch{
+        console.error(error);
     }
-})();
+})
 
-
-
-}
-
-  
-  main();
+app.listen(PORT, () => console.log('Your server is running on PORT ' + PORT)); //callback function
   
